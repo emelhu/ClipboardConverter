@@ -11,7 +11,7 @@ namespace ClipboardConverter
   {
     public static void SetText(string text)
     {
-       Result result = PushStringToClipboard(text);
+      Result result = PushStringToClipboard(text);
 
       if (! result.OK)
       {
@@ -86,15 +86,19 @@ namespace ClipboardConverter
     [STAThread]
     public static Result PushStringToClipboard(string message)
     {
-      var isAscii = (message != null && (message == Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(message))));
-      if (isAscii)
-      {
-        return PushUnicodeStringToClipboard(message);
-      }
-      else
-      {
-        return PushAnsiStringToClipboard(message);
-      }
+      //var isAscii = (message != null && (message == Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(message))));
+
+      //if (isAscii)
+      //{
+      //  return PushAnsiStringToClipboard(message);        
+      //}
+      //else
+      //{
+      //  return PushUnicodeStringToClipboard(message);
+      //}   
+
+      //return PushAnsiStringToClipboard(message);  
+      return PushUnicodeStringToClipboard(message);
     }
 
     [STAThread]
