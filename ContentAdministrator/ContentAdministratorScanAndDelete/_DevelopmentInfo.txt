@@ -1,0 +1,25 @@
+------------------------------------------------------------------------------------------------
+#nullable disable           // https://docs.microsoft.com/en-us/dotnet/csharp/nullable-references
+------------------------------------------------------------------------------------------------
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>8.0</LangVersion>
+    <NullableReferenceTypes>true</NullableReferenceTypes>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+</Project>
+------------------------------------------------------------------------------------------------
+https://devblogs.microsoft.com/dotnet/try-out-nullable-reference-types/
+
+<PropertyGroup>
+    <Nullable>enable</Nullable>
+</PropertyGroup>
+------------------------------------------------------------------------------------------------
+
+
+https://docs.microsoft.com/en-us/ef/core/what-is-new/ef-core-3.0/
+
+

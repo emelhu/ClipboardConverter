@@ -29,7 +29,7 @@ namespace ClipboardConverter
       Console.WriteLine();
       Console.ForegroundColor = ConsoleColor.Blue;
       Console.BackgroundColor = ConsoleColor.DarkGray;
-      Console.WriteLine("   *** Clipboard content converter 1.01 *** (c) eMeL *** www.emel.hu ***   ");
+      Console.WriteLine("   *** Clipboard content converter 1.01 *** (c) eMeL *** freeware *** www.emel.hu ***   ");
       Console.ResetColor();
       Console.WriteLine();
 

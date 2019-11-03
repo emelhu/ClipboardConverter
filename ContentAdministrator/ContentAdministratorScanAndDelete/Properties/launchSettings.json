@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "ContentAdministratorScanAndDelete": {
+      "commandName": "Project",
+      "commandLineArgs": "test",
+      "workingDirectory": "c:\\_work_\\"
+    }
+  }
+}
