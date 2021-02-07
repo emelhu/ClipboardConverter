@@ -1,0 +1,13 @@
+C:\eMeL_CSharp_Dev\Utilities\MailMergeWizard\SendEMail\obj\Release\netcoreapp3.1\SendEMail.csprojAssemblyReference.cache
+C:\eMeL_CSharp_Dev\Utilities\MailMergeWizard\SendEMail\obj\Release\netcoreapp3.1\SendEMail.AssemblyInfoInputs.cache
+C:\eMeL_CSharp_Dev\Utilities\MailMergeWizard\SendEMail\obj\Release\netcoreapp3.1\SendEMail.AssemblyInfo.cs
+C:\eMeL_CSharp_Dev\Utilities\MailMergeWizard\SendEMail\bin\Release\netcoreapp3.1\SendEMail.exe
+C:\eMeL_CSharp_Dev\Utilities\MailMergeWizard\SendEMail\bin\Release\netcoreapp3.1\SendEMail.deps.json
+C:\eMeL_CSharp_Dev\Utilities\MailMergeWizard\SendEMail\bin\Release\netcoreapp3.1\SendEMail.runtimeconfig.json
+C:\eMeL_CSharp_Dev\Utilities\MailMergeWizard\SendEMail\bin\Release\netcoreapp3.1\SendEMail.runtimeconfig.dev.json
+C:\eMeL_CSharp_Dev\Utilities\MailMergeWizard\SendEMail\bin\Release\netcoreapp3.1\SendEMail.dll
+C:\eMeL_CSharp_Dev\Utilities\MailMergeWizard\SendEMail\bin\Release\netcoreapp3.1\SendEMail.pdb
+C:\eMeL_CSharp_Dev\Utilities\MailMergeWizard\SendEMail\obj\Release\netcoreapp3.1\SendEMail.dll
+C:\eMeL_CSharp_Dev\Utilities\MailMergeWizard\SendEMail\obj\Release\netcoreapp3.1\SendEMail.pdb
+C:\eMeL_CSharp_Dev\Utilities\MailMergeWizard\SendEMail\bin\Release\netcoreapp3.1\Json.Net.dll
+C:\eMeL_CSharp_Dev\Utilities\MailMergeWizard\SendEMail\obj\Release\netcoreapp3.1\SendEMail.csproj.CopyComplete

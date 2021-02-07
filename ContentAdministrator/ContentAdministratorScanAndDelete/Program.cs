@@ -10,6 +10,7 @@ using ContentAdministratorCommonLibrary.Data;
 
 using eMeL_Common;
 using System.Threading;
+using System.Threading.Tasks;
 
 
 // Install-Package Microsoft.Extensions.CommandLineUtils
@@ -98,7 +99,7 @@ namespace ContentAdministrator
 
                     var connStr = Database.ReadConnectionString();
 
-                    CADB_Context.Init(connStr);
+                    CADB_Context.Init(connStr, true);
 
                     using (var db = new CADB_Context())
                     {
@@ -128,6 +129,121 @@ namespace ContentAdministrator
             });
             #endif
 
+            commandLineApp.Command("volumes", (command) =>
+            {
+                command.Description = "Display available volumes' informations.";
+
+                command.OnExecute(() =>
+                {
+                    const string line = "--------------------------------------------------------------------------";
+
+                    Console.WriteLine($"*** {command.Description} ***" + Environment.NewLine);   
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\nDriveInfo C# class");
+                    Console.ResetColor();    
+
+                    DriveInfo[] allDrives = DriveInfo.GetDrives();
+
+                    foreach (DriveInfo d in allDrives)
+                    {
+                        Console.WriteLine(line);
+
+                        Console.WriteLine("Drive {0}", d.Name);
+                        Console.WriteLine("  Drive type: {0}", d.DriveType);
+                        if (d.IsReady == true)
+                        {
+                            Console.WriteLine("  Volume label: {0}", d.VolumeLabel);
+                            Console.WriteLine("  File system:  {0}", d.DriveFormat);
+                            Console.WriteLine(
+                                "  Available space to current user:{0, 15} bytes", 
+                                d.AvailableFreeSpace);
+
+                            Console.WriteLine(
+                                "  Total available space:          {0, 15} bytes",
+                                d.TotalFreeSpace);
+
+                            Console.WriteLine(
+                                "  Total size of drive:            {0, 15} bytes ",
+                                d.TotalSize);
+                        }
+                    }
+                    
+                    Console.WriteLine(line); 
+                    
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\nThe Win32_Volume class represents an area of storage on a hard disk.\nThe class returns local volumes that are formatted, unformatted, mounted, or offline.");
+                    Console.ResetColor();                                  
+                    
+                    foreach (var info in Win32VolumeManage.GetVolumesInfo())
+                    {
+                        Console.WriteLine(line);  
+
+                        Console.WriteLine($"Automount                    : {info.automount                   }");
+                        Console.WriteLine($"Availability                 : {info.availability                }");
+                        Console.WriteLine($"BootVolume                   : {info.bootVolume                  }");
+                        Console.WriteLine($"BlockSize                    : {info.blockSize                   }");
+                        Console.WriteLine($"Caption                      : {info.caption                     }");
+                        Console.WriteLine($"Capacity                     : {info.capacity                    }");
+                        Console.WriteLine($"Compressed                   : {info.compressed                  }");
+                        Console.WriteLine($"Description                  : {info.description                 }");
+                        Console.WriteLine($"DeviceID                     : {info.deviceID                    }");
+                        Console.WriteLine($"DriveLetter                  : {info.driveLetter                 }");
+                        Console.WriteLine($"DriveType                    : {info.driveType                   }");
+                        Console.WriteLine($"FileSystem                   : {info.fileSystem                  }");
+                        Console.WriteLine($"FreeSpace                    : {info.freeSpace                   }");
+                        Console.WriteLine($"IndexingEnabled              : {info.indexingEnabled             }");
+                        Console.WriteLine($"Label                        : {info.label                       }");
+                        Console.WriteLine($"MaximumFileNameLength        : {info.maximumFileNameLength       }");
+                        Console.WriteLine($"Name                         : {info.name                        }");
+                        Console.WriteLine($"SerialNumber                 : {info.serialNumber                }");
+                        Console.WriteLine($"SupportsFileBasedCompression : {info.supportsFileBasedCompression}");
+                        Console.WriteLine($"SystemName                   : {info.systemName                  }");
+                        Console.WriteLine($"SystemVolume                 : {info.systemVolume                }");
+                        Console.WriteLine($"Guid                         : {info.guid                        }");
+                    }
+                    Console.WriteLine(line);
+
+                    //
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\nWin32_MappedLogicalDisk WMI class represents network storage devices\nthat are mapped as logical disks on the computer system.");
+                    Console.ResetColor();
+
+                    foreach (var info in Win32MappedLogicalDiskManage.GetMappedLogicalDiskInfo())
+                    {
+                        Console.WriteLine(line);
+
+                        Console.WriteLine($"Access                      : {info.access                      }");
+                        Console.WriteLine($"Availability                : {info.availability                }");
+                        Console.WriteLine($"BlockSize                   : {info.blockSize                   }");
+                        Console.WriteLine($"Caption                     : {info.caption                     }");
+                        Console.WriteLine($"Compressed                  : {info.compressed                  }");
+                        Console.WriteLine($"Description                 : {info.description                 }");
+                        Console.WriteLine($"DeviceID                    : {info.deviceID                    }");
+                        Console.WriteLine($"FileSystem                  : {info.fileSystem                  }");
+                        Console.WriteLine($"FreeSpace                   : {info.freeSpace                   }");
+                        Console.WriteLine($"InstallDate                 : {info.installDate                 }");
+                        Console.WriteLine($"Name                        : {info.name                        }");
+                        Console.WriteLine($"NumberOfBlocks              : {info.numberOfBlocks              }");
+                        Console.WriteLine($"PNPDeviceID                 : {info.pnpDeviceID                 }");
+                        Console.WriteLine($"ProviderName                : {info.providerName                }");
+                        Console.WriteLine($"Purpose                     : {info.purpose                     }");
+                        Console.WriteLine($"SessionID                   : {info.sessionID                   }");
+                        Console.WriteLine($"Size                        : {info.size                        }");
+                        Console.WriteLine($"Status                      : {info.status                      }");
+                        Console.WriteLine($"StatusInfo                  : {info.statusInfo                  }");
+                        Console.WriteLine($"SupportsFileBasedCompression: {info.supportsFileBasedCompression}");
+                        Console.WriteLine($"SystemName                  : {info.systemName                  }");
+                        Console.WriteLine($"VolumeName                  : {info.volumeName                  }");
+                        Console.WriteLine($"VolumeSerialNumber          : {info.volumeSerialNumber          }");
+                    }
+                    Console.WriteLine(line);
+
+                    return (int)ExitCode.OK;
+                });
+            });
+
             commandLineApp.Command("createdatabase", (command) =>
             {
                 command.Description = "Create database and save connection string";
@@ -144,12 +260,20 @@ namespace ContentAdministrator
                 command.OnExecute(async () =>
                 {
                     Console.WriteLine($"*** {command.Description} ***" + Environment.NewLine);
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine("  ~ current directory: " + System.IO.Directory.GetCurrentDirectory());
+                    Console.ResetColor();
 
                     exitCode = ExitCode.Error;
 
                     var connectionString = RetrieveConnectionString(connectionStringArgument.Value);
-                    await Database.CreateDatabaseAsync(connectionString);
-                    await Database.SaveConnectionStringAsync(connectionString);
+
+                    Task[] tasks = new Task[2];
+
+                    tasks[0] = Database.CreateDatabaseAsync(connectionString);
+                    tasks[1] = Database.SaveConnectionStringAsync(connectionString);
+
+                    await Task.WhenAll(tasks);
 
                     return (int)ExitCode.OK;
                 });
@@ -209,7 +333,7 @@ namespace ContentAdministrator
 
                     var connStr = Database.ReadConnectionString();
 
-                    CADB_Context.Init(connStr);
+                    CADB_Context.Init(connStr, true);
 
                     Console.WriteLine();
                     Console.ResetColor();
@@ -335,7 +459,7 @@ namespace ContentAdministrator
             string filename;
             string connectionString = null;
 
-            if (parameterValue.ToUpper().Trim() == "DEFAULT")
+            if (String.IsNullOrWhiteSpace(parameterValue) || parameterValue.ToUpper().Trim() == "DEFAULT")
             {
                 filename = @".\" + DefaultDatabaseConnectionStringFilename;
             }
@@ -346,6 +470,10 @@ namespace ContentAdministrator
 
             if (System.IO.File.Exists(filename))
             {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("  ~ connection string file: " + filename);
+                Console.ResetColor();
+
                 var lines = System.IO.File.ReadAllLines(filename);
 
                 foreach (var line in lines) 

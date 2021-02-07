@@ -2,8 +2,11 @@
   "profiles": {
     "ContentAdministratorScanAndDelete": {
       "commandName": "Project",
-      "commandLineArgs": "test",
-      "workingDirectory": "c:\\_work_\\"
+      "commandLineArgs": "scan c:\\_work_\\*.*",
+      "environmentVariables": {
+        "temptext2": "createdatabase",
+        "tempText": "scan c:\\_work_\\*.*"
+      }
     }
   }
 }

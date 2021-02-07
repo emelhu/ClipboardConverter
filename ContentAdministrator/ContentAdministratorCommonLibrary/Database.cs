@@ -27,21 +27,59 @@ namespace ContentAdministratorCommonLibrary
 
         public  const   string createLogsGroupName = "CREATE";
 
+        public static bool DeleteDatabase(string connectionString) 
+        { 
+            CADB_Context.Init(connectionString, false);
+
+            using (var db = new CADB_Context())
+            {                
+                if (db.Database.EnsureDeleted())
+                {
+                    Console.WriteLine("» Old Database deleted.");
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("» Old Database isn't exists.");
+                    return false;
+                }
+            }
+        }
+
         public static async System.Threading.Tasks.Task CreateDatabaseAsync(string connectionString)
         {
-            CADB_Context.Init(connectionString); 
+            #if DEBUG && DBCREATE
+            DeleteDatabase(connectionString);                                   // It executes 'CADB_Context.Init' too
+            #else
+            CADB_Context.Init(connectionString, false); 
+            #endif
 
             using (var db = new CADB_Context())
             {
                 #if DEBUG && DBCREATE
-                db.Database.EnsureDeleted();                    // ./SQLExpress: Nem működik!
-                db.Database.EnsureCreated();                    // ./SQLExpress --> "Database 'CONTADM' already exists. Choose a different database name."
+                //if (db.Database.EnsureDeleted())                    
+                //{
+                //    Console.WriteLine("  Old Database deleted.");
+                //}
+                //else
+                //{
+                //    Console.WriteLine("  Old Database isn't exists.");
+                //}
+
+                if (db.Database.EnsureCreated())                // ./SQLExpress --> "Database 'CONTADM' already exists. Choose a different database name."
+                {
+                    Console.WriteLine("*** Database created ***");
+                }
+                else
+                {
+                    Console.WriteLine("*** Database already exists ***");
+                }
                 // (localdb)   --> "A database with the same name exists, or specified file cannot be opened, or it is located on UNC share."
-                #else               
+                #else
                 db.Database.Migrate();                          // https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/#create-a-migration
                 #endif
 
-                #if DEBUG                
+                #if DEBUG
                 new Thread(() =>
                 {
                     var sql = db.Database.GenerateCreateScript();

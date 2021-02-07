@@ -4,7 +4,11 @@ using System.Text;
 
 namespace ContentAdministratorCommonLibrary
 {
+    using System.Diagnostics;
+    using System.Linq;
     using ContentAdministratorCommonLibrary.Data;
+    using eMeL_Common;
+    using static eMeL_Common.UncouplePathParts;
 
     public class Scan
     {
@@ -16,71 +20,102 @@ namespace ContentAdministratorCommonLibrary
 
         public void DoIt()
         {
-            using (var context = new CADB_Context())
-            {
-                string drive = UncoupleDriveAndDirectoryAndFilePart(parameters.directory).volume;
+            using var context = new CADB_Context();
 
-                string[] directoryElements = GetElementaryDirectories(parameters.directory);
+            try 
+            {
+                var         filenames = GetSelectedFilenames();
+                Directory   directory = null;
+
+                foreach (var file in filenames)
+                {
+                    if (directory == null)
+                    {   // TODO: directory info write to database
+                        var pathParts = new UncouplePathParts(file, UncouplePathParts.SubdirectoryGuid.Create);
+
+                        foreach (var sdi in pathParts.subdirectories)
+                        {
+                            var dirName = sdi.name;
+
+                            if ((sdi.guid != null) && (sdi.guid != Guid.Empty))
+                            {
+                                directory = context.directories.Where(d => d.guid == sdi.guid).FirstOrDefault();
+
+                                if (directory == null)
+                                {
+                                    VolumeInfo volumeInfo = pathParts.volume;
+                                    Volume     volume = null;
+
+                                    if ((volumeInfo.guid != null) && (volumeInfo.guid != Guid.Empty))
+                                    {
+                                        volume = context.volumes.Where(v => v.guid == volumeInfo.guid).FirstOrDefault();
+                                    }
+                                    else if (volumeInfo.serialNumber != 0)  
+                                    {
+                                        volume = context.volumes.Where(d => d.serialNumber == volumeInfo.serialNumber).FirstOrDefault();
+                                    }
+
+                                    if (volume == null)
+                                    {
+                                        volume = new Volume(volumeInfo.guid, volumeInfo.name, volumeInfo.serialNumber);
+                                        Trace.Fail("Not implemented! [volume]");    // TODO: ...!!!....
+                                    }
+
+                                    
+
+                                    directory = new Directory((Guid)sdi.guid, sdi.name, volume);
+
+                                    context.directories.Add(directory);
+                                }
+                            }
+                            else 
+                            {
+                                var a = sdi.fullName;
+                                Trace.Fail("Not implemented!");
+                                throw new NotImplementedException();
+                            }
+                        }
+                    }
+
+                    // TODO !!!
+                }
+
+            }
+            finally
+            {
+                context.SaveChanges();
             }
 
             throw new NotImplementedException();
         }
 
-        private (string volume, string directory, string file) UncoupleDriveAndDirectoryAndFilePart(string path)
-        {   // WARNING: only Windows code !!!
-            path             = System.IO.Path.GetFullPath(path);
-            
-            string volume    = null; 
-            string directory = null; 
-            string file      = null;     
-
-            string root      = System.IO.Path.GetPathRoot(path);    // https://docs.microsoft.com/en-us/dotnet/api/system.io.path.getpathroot?view=netcore-3.0
-
-            if (root.StartsWith(@"\\.\") || root.StartsWith(@"//"))
-            {
-
-            }
-            else if (root.StartsWith(@"\\") || root.StartsWith(@"//"))
-            { // UNC format
-
-            }
-
-            // TODO
-            
-            directory = System.IO.Path.GetDirectoryName(path);
-            file      = System.IO.Path.GetFileName(path);
-
-            string[] pathParts = directory.Split( System.IO.Path.VolumeSeparatorChar );
-
-            if (pathParts.Length > 1)
-            {
-                volume     = pathParts[0];
-                directory = pathParts[1];
-            }
-            else
-            {
-                directory = pathParts[0];
-            }
-
-            
-
-
-
-            return (volume, directory, file);
-
-            // LINUX: https://unix.stackexchange.com/questions/41100/mapping-between-logical-and-physical-block-device-names
-            // LINUX: https://unix.stackexchange.com/questions/125522/path-syntax-rules
-            // LINUX: https://unix.stackexchange.com/questions/256497/on-what-systems-is-foo-bar-different-from-foo-bar
-            // WinEx: https://docs.microsoft.com/en-us/dotnet/api/system.io.path.getpathroot?view=netcore-3.0
-        }
-        
-        private string[] GetElementaryDirectories(string path)
+        private HashSet<string> GetSelectedFilenames()
         {
-            var parts = UncoupleDriveAndDirectoryAndFilePart(path);
+            var files = new HashSet<string>();
 
-            string[] directories = parts.directory.Split(new[] { System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar });
+            foreach (var wildcard in parameters.includes)
+            {
+                var includeNames = System.IO.Directory.GetFiles(parameters.directory, wildcard);
 
-            return directories;
+                foreach (var tempName in includeNames)
+                {
+                    files.Add(tempName);                                                            // This will filter duplicate filenames
+                }
+            }
+
+            //
+
+            foreach (var wildcard in parameters.excludes)
+            {
+                var excludeNames = System.IO.Directory.GetFiles(parameters.directory, wildcard);
+
+                foreach (var tempName in excludeNames)
+                {
+                    files.Remove(tempName);                                                         
+                }
+            }
+
+            return files;
         }
     }
 }

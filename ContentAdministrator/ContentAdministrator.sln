@@ -6,17 +6,14 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContentAdministratorScanAndDelete", "ContentAdministratorScanAndDelete\ContentAdministratorScanAndDelete.csproj", "{09056D2D-BE2B-4A86-B8A3-7B1EF06B15AB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContentAdministratorCommonLibrary", "ContentAdministratorCommonLibrary\ContentAdministratorCommonLibrary.csproj", "{2673A572-A0E8-4078-9EF1-09729A5FAD60}"
-	ProjectSection(ProjectDependencies) = postProject
-		{7D2E261B-921A-40D7-AC24-1B96DDA4BA26} = {7D2E261B-921A-40D7-AC24-1B96DDA4BA26}
-	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContentAdministratorCommonLibrary_OS_dependent", "ContentAdministratorCommonLibrary_OS_dependent\ContentAdministratorCommonLibrary_OS_dependent.csproj", "{7D2E261B-921A-40D7-AC24-1B96DDA4BA26}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eMeL_CommonStandardLibrary", "..\..\CommonStandardLibraries\eMeL_CommonStandardLibrary\eMeL_CommonStandardLibrary.csproj", "{5FAC828A-1E01-4424-875A-998842959F43}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eMeL_CommonStandardDatabaseLibrary", "..\..\CommonStandardLibraries\eMeL_CommonStandardDatabaseLibrary\eMeL_CommonStandardDatabaseLibrary.csproj", "{6248A44C-D30F-497D-ADDB-CA9F40CF788C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eMeL_CommonCoreLibrary", "..\..\CommonStandardLibraries\eMeL_CommonCoreLibrary\eMeL_CommonCoreLibrary.csproj", "{9DABE450-B0DC-4EC3-9939-3542E6D61345}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eMeL_CommonCoreLibrary", "..\..\CommonStandardLibraries\eMeL_CommonCoreLibrary\eMeL_CommonCoreLibrary.csproj", "{9DABE450-B0DC-4EC3-9939-3542E6D61345}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "TestApp\TestApp.csproj", "{E5DA709E-333A-4906-9668-90B493CF82BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +29,6 @@ Global
 		{2673A572-A0E8-4078-9EF1-09729A5FAD60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2673A572-A0E8-4078-9EF1-09729A5FAD60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2673A572-A0E8-4078-9EF1-09729A5FAD60}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D2E261B-921A-40D7-AC24-1B96DDA4BA26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D2E261B-921A-40D7-AC24-1B96DDA4BA26}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D2E261B-921A-40D7-AC24-1B96DDA4BA26}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D2E261B-921A-40D7-AC24-1B96DDA4BA26}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5FAC828A-1E01-4424-875A-998842959F43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5FAC828A-1E01-4424-875A-998842959F43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FAC828A-1E01-4424-875A-998842959F43}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -48,6 +41,10 @@ Global
 		{9DABE450-B0DC-4EC3-9939-3542E6D61345}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DABE450-B0DC-4EC3-9939-3542E6D61345}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DABE450-B0DC-4EC3-9939-3542E6D61345}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5DA709E-333A-4906-9668-90B493CF82BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5DA709E-333A-4906-9668-90B493CF82BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5DA709E-333A-4906-9668-90B493CF82BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5DA709E-333A-4906-9668-90B493CF82BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

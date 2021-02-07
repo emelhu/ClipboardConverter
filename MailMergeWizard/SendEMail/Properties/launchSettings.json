@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SendMail": {
+      "commandName": "Project",
+      "commandLineArgs": "emel@emel.hu     c:\\work\\subject.txt           c:\\work\\body.html      c:\\work\\1.jpg "
+    }
+  }
+}

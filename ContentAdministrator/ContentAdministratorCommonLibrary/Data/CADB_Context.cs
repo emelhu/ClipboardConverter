@@ -28,11 +28,11 @@ namespace ContentAdministratorCommonLibrary.Data
     public class CADB_Context : eMeL_Common.DbContextBase //, eMeL_Common.IDbContextBase
     {
         #region Database Tables
-        public DbSet<Volume>            volume          { get; set; }
-        public DbSet<Directory>         directory       { get; set; }
-        public DbSet<File>              file            { get; set; }
+        public DbSet<Volume>            volumes         { get; set; }
+        public DbSet<Directory>         directories     { get; set; }
+        public DbSet<File>              files           { get; set; }
         public DbSet<Logs>              logs            { get; set; }
-        public DbSet<ParameterValue>    parameterValue  { get; set; }
+        public DbSet<ParameterValue>    parameterValues { get; set; }
         #endregion
 
         #region Sequence
@@ -66,7 +66,7 @@ namespace ContentAdministratorCommonLibrary.Data
         #endregion
 
         #region Constructor & init
-        public CADB_Context()
+        public CADB_Context() : base()
         {
             if (string.IsNullOrWhiteSpace(_connectionString))
             {
@@ -75,17 +75,24 @@ namespace ContentAdministratorCommonLibrary.Data
             }
         }
 
+        //private bool databaseCreate = false;
+
+        //public CADB_Context(bool databaseCreate) : base ()
+        //{
+        //    this.databaseCreate = databaseCreate;
+        //}
+
         /// <summary>
         /// Initialize database connection/context informations before create first context instance.
         /// </summary>
         /// <param name = "connectionString" > Connection string to database(extend with provider info)</param>
-        public static void Init(string connectionString)
+        public static void Init(string connectionString, bool preRead)
         {
             DbContextBase.Init<CADB_Context>(connectionString);                       // Call base class's Init()
 
             GetSequenceNextDelegate getSequenceNext = DbHelpers.GetSequenceValue<CADB_Context>;
             
-            idSequence       = new IDSequence(sequenceName,         getSequenceNext, 100, 10, true);
+            idSequence       = new IDSequence(sequenceName,         getSequenceNext, 100, 10, preRead);
             strategySequence = new IDSequence(strategySequenceName, getSequenceNext, 10);
           }
         #endregion

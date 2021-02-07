@@ -38,7 +38,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\CommonStandardLibraries\eMeL_CommonStandardDatabaseLibrary\eMeL_CommonStandardDatabaseLibrary.csproj" />
-    <ProjectReference Include="..\ContentAdministratorCommonLibrary_OS_dependent\ContentAdministratorCommonLibrary_OS_dependent.csproj" />
   </ItemGroup>
 
   <ItemGroup>
