@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "MailMergeWizard": {
-      "commandName": "Project",
-      "commandLineArgs": "Example "
-    }
-  }
-}
